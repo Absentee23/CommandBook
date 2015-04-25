@@ -32,14 +32,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 @ComponentInformation(friendlyName = "AFK Checker", desc = "AFK Checking and management.")
-@Depend(components = {GodComponent.class, SessionComponent.class})
+@Depend(components = {SessionComponent.class})
 public class AFKComponent extends BukkitComponent implements Runnable, Listener {
 
     private final CommandBook inst = CommandBook.inst();
     private final Logger log = CommandBook.logger();
     private final Server server = CommandBook.server();
 
-    @InjectComponent private GodComponent godComp;
     @InjectComponent private SessionComponent sessions;
 
     private LocalConfiguration config;
@@ -199,11 +198,6 @@ public class AFKComponent extends BukkitComponent implements Runnable, Listener 
         session.setLastUpdate(System.currentTimeMillis());
         session.setIdleStatus(null);
 
-        // Restore god mode setting
-        if (godComp != null && session.isProtected() && godComp.hasGodMode(player)) {
-            godComp.disableGodMode(player);
-            session.setProtected(false);
-        }
     }
 
     @Override
@@ -257,13 +251,6 @@ public class AFKComponent extends BukkitComponent implements Runnable, Listener 
                     }
                 }
 
-                // Check and set god mode
-                if (godComp != null && (canProtect(session.isRequested()) || (passedTime && canProtect(false)))) {
-                    if (!godComp.hasGodMode(target)) {
-                        godComp.enableGodMode(target);
-                        session.setProtected(true);
-                    }
-                }
             } else if (session.isAFK()) {
 
                 // Fix list name
