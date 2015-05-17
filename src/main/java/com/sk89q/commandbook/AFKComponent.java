@@ -215,7 +215,7 @@ public class AFKComponent extends BukkitComponent implements Runnable, Listener 
             }
 
             boolean passedTime = isAfk(session.getLastUpdate());
-            if (session.isRequested() || passedTime) {
+            if (session.isRequested() || (passedTime && !target.hasPermission("commandbook.away.autoexempt"))) {
                 if (shouldKick(session.getLastUpdate())) {
                     // Restore sleep ignored setting
                     if (session.isSleepIgnored()) {
