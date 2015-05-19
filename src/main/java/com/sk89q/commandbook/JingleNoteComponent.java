@@ -162,7 +162,7 @@ public class JingleNoteComponent extends BukkitComponent implements Listener {
             if (args.argsLength() == 0) {
                 for (Player target : targets) {
                     if (getJingleNoteManager().stop(target.getName())) {
-                        target.sendMessage(ChatColor.YELLOW + "All music stopped.");
+                        //target.sendMessage(ChatColor.YELLOW + "All music stopped.");
                     }
                 }
                 return;
@@ -202,8 +202,8 @@ public class JingleNoteComponent extends BukkitComponent implements Listener {
                 MidiJingleSequencer sequencer = new MidiJingleSequencer(file, false);
                 for (Player player : targets) {
                     getJingleNoteManager().play(player.getName(), sequencer);
-                    player.sendMessage(ChatColor.YELLOW + "Playing " + file.getName()
-                            + "... Use '/midi' to stop.");
+                    //player.sendMessage(ChatColor.YELLOW + "Playing " + file.getName()
+                    //        + "... Use '/midi' to stop."););
                 }
             } catch (MidiUnavailableException e) {
                 throw new CommandException("Failed to access MIDI: "
